@@ -10,5 +10,6 @@ data
 runs
 subprojects/*
 !subprojects/*.wrap
+!subprojects/nichess-cpp
 
 __pycache__

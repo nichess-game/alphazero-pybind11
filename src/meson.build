@@ -18,6 +18,10 @@ gbench_proj = subproject('google-benchmark')
 gbench_main_dep = gbench_proj.get_variable('google_benchmark_main_dep')
 gbench_dep = gbench_proj.get_variable('google_benchmark_dep')
 
+cmake = import('cmake')
+nichess_proj = cmake.subproject('nichess-cpp')
+nichess_dep = nichess_proj.dependency('nichess')
+
 thread_dep = dependency('threads')
 
 lib_args = ['-DBUILDLIB']
