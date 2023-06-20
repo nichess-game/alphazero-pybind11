@@ -1,5 +1,6 @@
 #include <cmath>
 
+#include "nichess_gs.h"
 #include "brandubh_gs.h"
 #include "connect4_gs.h"
 #include "onitama_gs.h"
@@ -24,6 +25,7 @@ using onitama_gs::OnitamaGS;
 using opentafl_gs::OpenTaflGS;
 using photosynthesis_gs::PhotosynthesisGS;
 using tawlbwrdd_gs::TawlbwrddGS;
+using nichess_gs::NichessGS;
 
 // NOLINTNEXTLINE
 PYBIND11_MODULE(alphazero, m) {
@@ -345,6 +347,15 @@ PYBIND11_MODULE(alphazero, m) {
       .def_static("NUM_SYMMETRIES", [] { return connect4_gs::NUM_SYMMETRIES; })
       .def_static("CANONICAL_SHAPE",
                   [] { return connect4_gs::CANONICAL_SHAPE; });
+
+  py::class_<NichessGS, GameState>(m, "NichessGS")
+      .def(py::init<>())
+      .def("move_to_player_action", &nichess_gs::NichessGS::move_to_player_action)
+      .def_static("NUM_PLAYERS", [] { return nichess_gs::NUM_PLAYERS; })
+      .def_static("NUM_MOVES", [] { return nichess_gs::NUM_MOVES; })
+      .def_static("NUM_SYMMETRIES", [] { return nichess_gs::NUM_SYMMETRIES; })
+      .def_static("CANONICAL_SHAPE",
+                  [] { return nichess_gs::CANONICAL_SHAPE; });
 
   py::class_<PhotosynthesisGS<2>, GameState>(m, "PhotosynthesisGS2")
       .def(py::init<>())

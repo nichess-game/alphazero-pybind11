@@ -101,6 +101,14 @@ connect4_gs_test = executable(
 )
 test('gtest tests', connect4_gs_test)
 
+nichess_gs = library(
+    'nichess_gs',
+    'nichess_gs.cc', 'nichess_wrapper.cc',
+    dependencies: [eigen_dep, absl_hash_dep, nichess_dep],
+    cpp_args: lib_args,
+)
+
+
 photosynthesis_gs_test = executable(
   'photosynthesis_gs_test',
   'photosynthesis_gs_test.cc',
@@ -165,6 +173,6 @@ play_manager_bench = executable(
 py3_install.extension_module(
   'alphazero',
   sources: ['py_wrapper.cc'],
-  link_with: [connect4_gs, onitama_gs, brandubh_gs, opentafl_gs, tawlbwrdd_gs, play_manager, mcts],
-  dependencies : [pybind11_dep, py3_dep, eigen_dep, absl_container_dep, absl_hash_dep],
+  link_with: [nichess_gs, connect4_gs, onitama_gs, brandubh_gs, opentafl_gs, tawlbwrdd_gs, play_manager, mcts],
+  dependencies : [pybind11_dep, py3_dep, eigen_dep, absl_container_dep, absl_hash_dep, nichess_dep],
 )

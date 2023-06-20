@@ -15,7 +15,7 @@ from load_lib import load_alphazero
 
 alphazero = load_alphazero()
 
-HIST_SIZE = 30_000
+HIST_SIZE = 50_000
 HIST_LOCATION = os.path.join('data', 'history')
 TMP_HIST_LOCATION = os.path.join('data', 'tmp_history')
 CHECKPOINT_LOCATION = os.path.join('data', 'checkpoint')
@@ -26,7 +26,7 @@ GRArgs = namedtuple(
 # That said, some games get a lot of cache misses and the cache contention makes it slower.
 # Setting to 0 disables the cache.
 # Probably a number between 100_000 and 1_000_000 for most games.
-MAX_CACHE_SIZE = 200_000
+MAX_CACHE_SIZE = 0
 
 # How many shards to split the cache into.
 # Due to multithreading, the cache can have high contention.
@@ -81,8 +81,8 @@ RESIGN_PERCENT = 0.02
 RESIGN_PLAYTHROUGH_PERCENT = 0.20
 
 # Use this to select what game to train.
-Game = alphazero.Connect4GS
-game_name = 'connect4'
+Game = alphazero.NichessGS
+game_name = 'nichess'
 
 # When you change game, define initialization here.
 # For example some games could change board size or exact ruleset here.
@@ -105,8 +105,8 @@ network_name = 'densenet' if dense_net else 'resnet'
 lr_milestone = 150
 
 # MCTS search depth must increase with complex games.
-nn_selfplay_mcts_depth = 100
-nn_selfplay_fast_mcts_depth = 25
+nn_selfplay_mcts_depth = 1000
+nn_selfplay_fast_mcts_depth = 200
 nn_compare_mcts_depth = nn_selfplay_mcts_depth//2
 
 # This is  just for validation of learning.
@@ -424,6 +424,7 @@ if __name__ == '__main__':
         sample_count = len(dataset)
         dataloader = DataLoader(
             dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=False)
+        print(f'dataset size: {len(dataset)}')
 
         i_out = 0
         batch_out = 0
@@ -488,6 +489,7 @@ if __name__ == '__main__':
         sample_count = len(dataset)
         dataloader = DataLoader(
             dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=False)
+        print(f'dataset size: {len(dataset)}')
 
         nn = neural_net.NNWrapper.load_checkpoint(
             Game, CHECKPOINT_LOCATION, f'{iteration:04d}-{run_name}.pt')
@@ -566,6 +568,7 @@ if __name__ == '__main__':
         dataset = ConcatDataset(datasets)
         dataloader = DataLoader(
             dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
+        print(f'dataset size: {len(dataset)}')
 
         nn = neural_net.NNWrapper.load_checkpoint(
             Game, CHECKPOINT_LOCATION, f'{iteration:04d}-{run_name}.pt')
