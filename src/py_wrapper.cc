@@ -350,6 +350,7 @@ PYBIND11_MODULE(alphazero, m) {
 
   py::class_<NichessGS, GameState>(m, "NichessGS")
       .def(py::init<>())
+      .def(py::init<const std::string>())
       .def("move_to_player_action", &nichess_gs::NichessGS::move_to_player_action)
       .def_static("NUM_PLAYERS", [] { return nichess_gs::NUM_PLAYERS; })
       .def_static("NUM_MOVES", [] { return nichess_gs::NUM_MOVES; })

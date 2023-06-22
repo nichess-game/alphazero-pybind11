@@ -20,6 +20,10 @@ class DLLEXPORT NichessGS : public GameState {
     gameWrapper = std::make_unique<nichess_wrapper::GameWrapper>(gameCache, agentCache);
   }
 
+  NichessGS(const std::string encodedBoard) {
+    gameWrapper = std::make_unique<nichess_wrapper::GameWrapper>(gameCache, agentCache, encodedBoard);
+  }
+
   [[nodiscard]] std::unique_ptr<GameState> copy() const noexcept override;
   [[nodiscard]] bool operator==(const GameState& other) const noexcept override;
 

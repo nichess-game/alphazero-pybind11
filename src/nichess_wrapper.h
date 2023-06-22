@@ -23,6 +23,7 @@ class GameWrapper {
     AgentCache* agentCache;
 
     GameWrapper(nichess::GameCache& gameCache, AgentCache& agentCache);
+    GameWrapper(nichess::GameCache& gameCache, AgentCache& agentCache, const std::string encodedBoard);
     GameWrapper(const GameWrapper& other);
     GameWrapper(const std::unique_ptr<nichess_wrapper::GameWrapper>& other);
     ~GameWrapper();

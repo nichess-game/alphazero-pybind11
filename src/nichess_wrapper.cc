@@ -137,6 +137,11 @@ nichess_wrapper::GameWrapper::GameWrapper(nichess::GameCache& gameCache, AgentCa
   game = new Game(gameCache);
 }
 
+nichess_wrapper::GameWrapper::GameWrapper(nichess::GameCache& gameCache, AgentCache& agentCache, const std::string encodedBoard) {
+  this->agentCache = &agentCache;
+  game = new Game(gameCache, encodedBoard);
+}
+
 nichess_wrapper::GameWrapper::GameWrapper(const nichess_wrapper::GameWrapper& other) {
   this->agentCache = other.agentCache;
   game = new Game(*other.game);
